@@ -112,13 +112,13 @@ const promptTeam = teamData => {
                 },
                 {
                     type: 'input',
-                    name: 'engineerOffice',
-                    message: "What is the engineer's office number?",
-                    validate: engineerOfficeInput => {
-                      if (engineerOfficeInput) {
+                    name: 'engineerGitHub',
+                    message: "What is the engineer's GitHub username?",
+                    validate: engineerGitHubInput => {
+                      if (engineerGitHubInput) {
                         return true;
                       } else {
-                        console.log('Please enter the engineer office number!')
+                        console.log('Please enter the engineer GitHub username!')
                         return false;
                       }
                     }  
@@ -172,13 +172,13 @@ const promptTeam = teamData => {
                 },
                 {
                     type: 'input',
-                    name: 'internOffice',
-                    message: "What is the intern's office number?",
-                    validate: internOfficeInput => {
-                      if (internOfficeInput) {
+                    name: 'internSchool',
+                    message: "What is the intern's school name?",
+                    validate: internSchoolInput => {
+                      if (internSchoolInput) {
                         return true;
                       } else {
-                        console.log('Please enter the intern office number!')
+                        console.log('Please enter the intern school name!')
                         return false;
                       }
                     }  
@@ -190,13 +190,8 @@ const promptTeam = teamData => {
             });
         }
         if (employeeChoice === "I'm finished building my team!") {
-            if (teamData.employees = []) {
-                console.log('Please add a member to your team!');
-                return promptTeam(teamData);
-            } else {
-                return teamData;
-            }
-            
+
+            return teamData;
         }
 
     })
