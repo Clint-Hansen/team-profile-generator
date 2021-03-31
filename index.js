@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const Employee = require('./lib/Employee');
 
 
 const promptManager = () => {
