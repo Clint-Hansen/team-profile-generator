@@ -1,5 +1,6 @@
+const fs = require('fs');
 const inquirer = require('inquirer');
-const Employee = require('./lib/Employee');
+const generatePage = require('./src/page-template');
 
 
 const promptManager = () => {
@@ -60,8 +61,11 @@ const promptManager = () => {
 };
 
 const promptTeam = teamData => {
-    if (!teamData.employees) {
-        teamData.employees = []
+    if (!teamData.engineers) {
+        teamData.engineers = [];
+    }
+    if (!teamData.interns) {
+      teamData.interns = [];
     }
     return inquirer.prompt({
           type: 'list',
@@ -126,7 +130,7 @@ const promptTeam = teamData => {
                 }
             ])
             .then(employeeData => {
-                teamData.employees.push(employeeData);
+                teamData.engineers.push(employeeData);
                 return promptTeam(teamData)
             });
         }
@@ -186,7 +190,7 @@ const promptTeam = teamData => {
                 }
             ])
             .then(employeeData => {
-                teamData.employees.push(employeeData);
+                teamData.interns.push(employeeData);
                 return promptTeam(teamData)
             });
         }
@@ -201,5 +205,32 @@ promptManager()
 .then(promptTeam)
 .then(teamData => {
     console.log(teamData);
+    return generatePage(teamData);
+})
+.then(pageHTML => {
+  return writeFile(pageHTML)
+})
+.catch(err => {
+  console.log(err);
 })
 
+
+
+const writeFile = fileContent => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile('./dist/team.html', fileContent, err => {
+        // if there's an error, reject the Promise and send the error to the Promise's .catch() method.
+        if (err) {
+            reject(err);
+            // return out of the function here to make sure the promise doesn't accidentally execute the resolve() function as well
+            return;
+        }
+
+        // if everything went well, resolve the Promise and send the successfull data to the .then() method
+        resolve({
+            ok: true,
+            message: 'File created!'
+            });
+        });
+    });
+};
