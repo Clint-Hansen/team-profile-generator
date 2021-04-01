@@ -204,11 +204,10 @@ const promptTeam = teamData => {
 promptManager()
 .then(promptTeam)
 .then(teamData => {
-    console.log(teamData);
     return generatePage(teamData);
 })
 .then(pageHTML => {
-  return writeFile(pageHTML)
+    return writeFile(pageHTML)
 })
 .catch(err => {
   console.log(err);
